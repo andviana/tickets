@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Pessoas {% endblock %}
+{% block header_title %} Pessoas {% endblock %}
+{% block body %}
+    <div class="w-100 text-end">
+        <a class="btn btn-primary m-2" href="{{ path('app_pessoa_new') }}"><i class="bi bi-person-plus mx-2"></i>Novo</a>
+    </div>
+
+    <div class="table-responsive rounded">
+        <table class="table table-sm table-light table-striped w-100">
+            <thead class="table-dark small">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>login</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% for pessoa in pessoas %}
+                <tr>
+                    <td>{{ pessoa.nome }}</td>
+                    <td>{{ pessoa.email }}</td>
+                    <td>
+                        {% for user in pessoa.users %}
+                            <div>{{ user.username }}</div>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           href="{{ path('app_pessoa_show', {'id': pessoa.id}) }}"><i class="bi bi-arrow-right-circle"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Início{% endblock %}
+{% block header_title %} Selecione um evento {% endblock %}
+{% block body %}
+    <div class="w-100 text-end">
+        <a class="btn btn-primary m-2" href="{{ path('app_evento_new') }}">
+            <i class="bi bi-calendar-plus mx-2"></i>Novo
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="row g-2">
+            {% for evento in eventos %}
+                <div class=" col-sm-12 col-md-6 col-lg-4">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white-50">
+                            <div class="d-flex flex-row align-items-center justify-content-between">
+                                <h3 class="p-0 m-0"><i
+                                            class="bi bi-calendar-check me-3"></i>{{ evento.data|date('m-Y') }}</h3>
+                                <a class="btn text-white-50 shadow"
+                                   href="{{ path('app_evento_show',{'id':evento.id}) }}">
+                                    <i class="bi bi-gear"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <h4>{{ evento.nome }}</h4>
+                            <hr/>
+                            <div class="small text-muted fw-light">Local:</div>
+                            <p>{{ evento.local }} </p>
+                            <div class="small text-muted fw-light">Data Realização:</div>
+                            <p>{{ evento.data|date('d-m-Y') }} </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('app_lote_index') }}" class="btn btn-primary">Entrar <i
+                                        class="bi bi-arrow-right mx-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

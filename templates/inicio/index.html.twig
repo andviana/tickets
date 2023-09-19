@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Início{% endblock %}
+{% block header_title %} Selecione um evento {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row g-2">
+            <img src="{{ qr_code_path( 'https://192.168.4.14:8000/login') }}" alt="teste"/>
+        </div>
+    </div>
+{% endblock %}

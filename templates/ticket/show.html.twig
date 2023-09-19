@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket{% endblock %}
+
+{% block body %}
+    <h1>Ticket</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>
+                <img src="{{ qr_code_path( 'https://192.168.4.14:8000/registro/ticket/'~ticket.id) }}" alt="teste"/>
+                <div class="text-start">
+                    <small class="text-muted mt-3">{{ ticket.id }}</small>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Numero</th>
+            <td>{{ ticket.numero }}</td>
+        </tr>
+        <tr>
+            <th>DataEmissao</th>
+            <td>{{ ticket.dataEmissao ? ticket.dataEmissao|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Recolhido</th>
+            <td>{{ ticket.recolhido ? 'Yes' : 'No' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ticket_index') }}">back to list</a>
+
+    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a>
+
+    {{ include('ticket/_delete_form.html.twig') }}
+{% endblock %}

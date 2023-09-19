@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadastro de Lote{% endblock %}
+{% block header_title %}Cadastro de Lote {% endblock %}
+{% block body %}
+    <h6 class="h6 mx-2">Dados do Lote</h6>
+    {{ include('lote/_form.html.twig') }}
+    <a class="btn btn-outline-primary w-100 my-2" href="{{ path('app_lote_index') }}">
+        <i class="bi bi-arrow-left-circle mx-2"></i>
+        Voltar
+    </a>
+{% endblock %}
+
+
+

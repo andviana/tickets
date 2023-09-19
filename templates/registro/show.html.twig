@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block body %}
+    <style>
+        .table td,th{
+            background-color: #faf9bf!important;
+        }
+    </style>
+    <h1>Registro</h1>
+
+    <div class="p-4 m-4 shadow" style="background-color: #faf9bf">
+        <table class="table" style="font-family: monospace; background-color: #faf9bf">
+            <tbody>
+            <tr>
+                <th>Evento:</th>
+                <td>{{ registro.ticket.evento.nome }}</td>
+            </tr>
+            <tr>
+                <th>Produto:</th>
+                <td class="fw-bold">{{ registro.ticket.produto }}</td>
+            </tr>
+            <tr>
+                <th>Número:</th>
+                <td>{{ registro.ticket.numero~'/'~registro.ticket.lote.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo do Ticket:</th>
+                <td>{{ registro.ticket.id }}</td>
+            </tr>
+            <tr>
+                <th>Data/Hora do Registro:</th>
+                <td>{{ registro.dataRegistro ? registro.dataRegistro|date('d/m/y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Registrado Por:</th>
+                <td>{{ registro.userRegistro.pessoa }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('app_registro_index') }}">back to list</a>
+
+    <a href="{{ path('app_registro_edit', {'id': registro.id}) }}">edit</a>
+
+    {{ include('registro/_delete_form.html.twig') }}
+{% endblock %}

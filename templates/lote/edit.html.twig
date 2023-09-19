@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Lote{% endblock %}
+{% block header_title %}Editar dados {% endblock %}
+{% block body %}
+    <h6 class="h6 mx-2">Dados do Lote</h6>
+    <div class="card card-body my-2">
+        {{ include('lote/_form.html.twig', {'button_label': 'Atualizar'}) }}
+        <a class="btn btn-outline-primary w-100 my-2" href="{{ path('app_lote_index') }}">
+            <i class="bi bi-arrow-left-circle mx-2"></i>
+            Voltar
+        </a>
+    </div>
+
+{% endblock %}

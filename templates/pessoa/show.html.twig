@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dados da Pessoa{% endblock %}
+{% block header_title %} {{ pessoa.nome }} {% endblock %}
+{% block body %}
+    <h5 class="h6 mx-2"> Dados da Pessoa: </h5>
+    <div class="card card-body">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Código:</th>
+                <td class="small text-muted">{{ pessoa.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome:</th>
+                <td>{{ pessoa.nome }}</td>
+            </tr>
+            <tr>
+                <th>E-mail:</th>
+                <td>
+                    <a href="mailto:{{ pessoa.email }}" target="_blank">
+                        {{ pessoa.email }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>CPF:</th>
+                <td>{{ pessoa.cpf }}</td>
+            </tr>
+            <tr>
+                <th>Usuários:</th>
+
+                <td>
+                    <ol class="list-group list-group-numbered">
+                        {% for user in pessoa.users %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{ user.username }}</div>
+                                <span class="text-muted small">{{ user.id }}</span>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">ok</span>
+                        </li>
+                        {% else %}
+                            <li class="list-group-item text-muted text-center fw-light fst-italic small">
+                                Nenhum usuário registrado
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container text-center my-3">
+        <div class="row my-1">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" href="{{path('app_change_password')}}">
+                    <i class="bi bi-lock-fill"></i>
+                    Aterar Senha
+                </a>
+            </div>
+            <div class="col">
+                <a class="btn btn-primary w-100" href="{{ path('app_pessoa_edit', {'id': pessoa.id}) }}">
+                    <i class="bi bi-pencil-square"></i>
+                    Editar
+                </a>
+            </div>
+        </div>
+        <div class="row my-1">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" href="{{ path('app_pessoa_index') }}">
+                    <i class="bi bi-arrow-left-circle mx-2"></i>
+                    Voltar
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

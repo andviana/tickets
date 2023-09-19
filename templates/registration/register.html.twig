@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registre-se{% endblock %}
+{% block header_title %} Registre-se {% endblock %}
+{% block body %}
+    {{ form_errors(registrationForm) }}
+    {{ form_start(registrationForm) }}
+    <div class="card card-body">
+
+        {{ form_row(registrationForm.nome, {
+            label: 'Nome Completo:'
+        }) }}
+        {{ form_row(registrationForm.email, {
+            label: 'E-mail:'
+        }) }}
+        {{ form_row(registrationForm.cpf, {
+            label: 'CPF:'
+        }) }}
+        {{ form_row(registrationForm.username, {
+            label: 'Usuário:'
+        }) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Senha:'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+    </div>
+    <button type="submit" class="btn btn-primary w-100 mt-3"><i class="bi bi-send mx-1"></i>Enviar</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

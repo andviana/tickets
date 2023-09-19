@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dados do Lote{% endblock %}
+{% block header_title %} {{ lote.produto.denominacao}} {% endblock %}
+{% block body %}
+    <h5 class="h6 mx-2"> Dados do Lote: </h5>
+    <div class="card card-body">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Código:</th>
+                <td class="small text-muted">{{ lote.id }}</td>
+            </tr>
+            <tr>
+                <th>Produto:</th>
+                <td>{{ lote.produto }}</td>
+            </tr>
+            <tr>
+                <th>Quantidade Emitida:</th>
+                <td class="h5">{{ lote.quantidade }}</td>
+            </tr>
+            <tr>
+                <th>Data de Emissão:</th>
+                <td>{{ lote.dataEmissao | date('d/m/y') }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container text-center my-3">
+        <div class="row my-2">
+            <div class="col">
+                <a class="btn btn-primary w-100" href="{{path('app_ticket_index')}}">
+                    <i class="bi bi-tags"></i>
+                    Listar Tickets
+                </a>
+            </div>
+            <div class="col">
+                <a class="btn btn-primary w-100" href="#">
+                    <i class="bi bi-printer"></i>
+                    Imprimir Tickets
+                </a>
+            </div>
+            <div class="col">
+                <a class="btn btn-primary w-100" href="{{ path('app_lote_edit', {'id': lote.id}) }}">
+                    <i class="bi bi-pencil-square"></i>
+                    Editar
+                </a>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" href="{{ path('app_lote_index') }}">
+                    <i class="bi bi-arrow-left-circle mx-2"></i>
+                    Voltar
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

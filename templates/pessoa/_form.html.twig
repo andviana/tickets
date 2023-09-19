@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary w-100">
+        <i class="bi bi-save mx-2"></i>
+        {{ button_label|default('Salvar') }}
+    </button>
+{{ form_end(form) }}
