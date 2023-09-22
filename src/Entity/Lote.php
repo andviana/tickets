@@ -106,4 +106,36 @@ class Lote
 
         return $this;
     }
+
+    public function getTicketsRegistrados()
+    {
+        return $this->tickets->filter(fn(Ticket $ticket)=> $ticket->isRecolhido());
+    }
+    public function getTicketsNaoRegistrados()
+    {
+        return $this->tickets->filter(fn(Ticket $ticket)=> !$ticket->isRecolhido());
+    }
+    public function getValorTotalPerspectiva()
+    {
+        return $this->produto->getValor() * $this->quantidade;
+    }
+    public function getValorTotalReal()
+    {
+        $ticketsRegistrados = $this->getTicketsRegistrados();
+        return $ticketsRegistrados->reduce(
+            fn(int $total, Ticket $ticket)=>$total + $ticket->getProduto()->getValor(),0
+        );
+    }
+
+    public function getRegistradoTotalAbsoluto():int
+    {
+        return count($this->getTicketsRegistrados());
+    }
+    public function getRegistradoTotalPercentual():int
+    {
+        $quantidade = $this->getRegistradoTotalAbsoluto();
+        $total = count($this->getTickets());
+        $percentual = ($quantidade/$total)*100;
+        return floor($percentual);
+    }
 }

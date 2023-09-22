@@ -37,16 +37,22 @@
                                         </a>
                                     </div>
                                     <div class="progress" role="progressbar" aria-label="Success example"
-                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar bg-success" style="width: 25%">25%</div>
+                                         aria-valuenow="{{ lote.registradoTotalPercentual }}" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar bg-success" style="width: {{ lote.registradoTotalPercentual }}%">{{ lote.registradoTotalPercentual }}%</div>
                                     </div>
                                     <hr class="mb-2 text-muted"/>
                                     <div class="d-flex flex-row align-items-center justify-content-between">
                                         <div class="small">
                                             <div><span class="small text-muted">Tickets Emitidos:</span> <strong
                                                         class="text-danger">{{ lote.quantidade }}</strong></div>
+                                            <div><span class="small text-muted">Valor Unitário:</span> <strong
+                                                        class="text-danger">{{ lote.produto.valor|get_format_money }}</strong></div>
+                                            <div><span class="small text-muted">Total Valor Esperado:</span> <strong
+                                                        class="text-danger">{{ lote.valorTotalPerspectiva|get_format_money }}</strong></div>
                                             <div><span class="small text-muted">Tickets Registrados:</span> <strong
-                                                        class="text-danger">{{ lote.quantidade }}</strong></div>
+                                                        class="text-danger">{{ lote.registradoTotalAbsoluto }}</strong></div>
+                                            <div><span class="small text-muted">Total Registrado:</span> <strong
+                                                        class="text-danger">{{ lote.valorTotalReal|get_format_money }}</strong></div>
                                         </div>
                                         <div>
                                             <a class="btn btn-primary btn-sm" href="#">
