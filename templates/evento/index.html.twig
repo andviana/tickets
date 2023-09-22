@@ -34,7 +34,7 @@
                             <p>{{ evento.data|date('d-m-Y') }} </p>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ path('app_lote_index') }}" class="btn btn-primary">Entrar <i
+                            <a href="{{ path('app_lote_lista',{'id':evento.id}) }}" class="btn btn-primary">Entrar <i
                                         class="bi bi-arrow-right mx-2"></i></a>
                         </div>
                     </div>
