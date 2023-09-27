@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ticket{% endblock %}
 
+{% block title %} Ticket {% endblock %}
+{% block header_title %} Ticket n.º {{ ticket.numero}} {% endblock %}
 {% block body %}
-    <h1>Ticket</h1>
-
+    <h5 class="h6 mx-2"> Dados do Ticket: </h5>
+    <div class="card card-body">
     <table class="table">
         <tbody>
         <tr>
-            <th>Id</th>
+            <th>Código:</th>
             <td>
                 <img src="{{ qr_code_path( 'https://192.168.4.14:8000/registro/ticket/'~ticket.id) }}" alt="teste"/>
                 <div class="text-start">
@@ -17,23 +18,41 @@
             </td>
         </tr>
         <tr>
-            <th>Numero</th>
+            <th>Produto:</th>
+            <td>{{ ticket.produto.denominacao }}</td>
+        </tr>
+        <tr>
+            <th>Valor:</th>
+            <td>{{ ticket.produto.valor | get_format_money}}</td>
+        </tr>
+        <tr>
+            <th>Sequência/Lote:</th>
+            <td>{{ ticket.sequenciaLote~'/'~ticket.lote.id }}</td>
+        </tr>
+        <tr>
+            <th>Número:</th>
             <td>{{ ticket.numero }}</td>
         </tr>
         <tr>
-            <th>DataEmissao</th>
-            <td>{{ ticket.dataEmissao ? ticket.dataEmissao|date('Y-m-d H:i:s') : '' }}</td>
+            <th>Data de Emissão:</th>
+            <td>{{ ticket.dataEmissao ? ticket.dataEmissao|date('d/m/y H:i:s') : '' }}</td>
         </tr>
         <tr>
-            <th>Recolhido</th>
-            <td>{{ ticket.recolhido ? 'Yes' : 'No' }}</td>
+            <th>Registrado:</th>
+            <td><i class="{{ (not ticket.recolhido) | get_format_boolean }} me-2"></i>{{ ticket.recolhido ? 'Sim (ticket inativo)' : 'Não (ticket ativo)' }}</td>
         </tr>
         </tbody>
     </table>
+    </div>
+    <div class="container text-center my-3">
+        <div class="row my-1">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" href="{{ path('app_ticket_list',{'id':ticket.lote.id}) }}">
+                    <i class="bi bi-arrow-left-circle mx-2"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_ticket_index') }}">back to list</a>
-
-    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a>
-
-    {{ include('ticket/_delete_form.html.twig') }}
 {% endblock %}

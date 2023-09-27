@@ -1,36 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ticket index{% endblock %}
-
+{% block title %} Lote de Tickets {% endblock %}
+{% block header_title %} Lote n.º {{ tickets[0].lote.id }} {% endblock %}
 {% block body %}
-    <h1>Ticket index</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Lote/Numero</th>
-                <th>DataEmissao</th>
-                <th>Recolhido</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <td>{{ ticket.lote.id~'/'~ticket.numero }}</td>
-                <td>{{ ticket.dataEmissao ? ticket.dataEmissao|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ ticket.recolhido ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}">show</a>
-                    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_ticket_new') }}">Create new</a>
+    <h1>{{ tickets[0].produto.denominacao }}</h1>
+    <h5><small class="text-muted">Quantidade:</small>{{ tickets[0].lote.quantidade }}</h5>
+    <div class="table-responsive rounded">
+        <table class="table table-sm table-light table-striped w-100">
+            <thead class="table-warning small">
+            <tr>
+                <th>Lote</th>
+                <th>Número</th>
+                <th>Data Emissão</th>
+                <th>Ativo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="">
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.sequenciaLote~'/'~ticket.lote.quantidade~'-'~ticket.lote.id }}</td>
+                    <td class="fw-semibold">{{ ticket.numero }}</td>
+                    <td class="small text-muted">{{ ticket.dataEmissao ? ticket.dataEmissao|date('d/m/y H:i:s') : '' }}</td>
+                    <td><i class="{{ (not ticket.recolhido) | get_format_boolean }}"></i></td>
+                    <td>
+                        <a class="btn btn-sm btn-primary"
+                           href="{{ path('app_ticket_show', {'id': ticket.id}) }}"><i
+                                    class="bi bi-arrow-right-circle"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">nenhum ticket encontrado</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container text-center my-3">
+        <div class="row my-1">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" href="{{ path('app_lote_show', {'id':tickets[0].lote.id}) }}">
+                    <i class="bi bi-arrow-left-circle mx-2"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

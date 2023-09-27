@@ -46,6 +46,9 @@ class Ticket
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     private ?Lote $lote = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $sequenciaLote = null;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -155,5 +158,17 @@ class Ticket
     public function __toString(): string
     {
         return $this->produto;
+    }
+
+    public function getSequenciaLote(): ?int
+    {
+        return $this->sequenciaLote;
+    }
+
+    public function setSequenciaLote(?int $sequenciaLote): static
+    {
+        $this->sequenciaLote = $sequenciaLote;
+
+        return $this;
     }
 }

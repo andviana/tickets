@@ -8,6 +8,7 @@ use App\Entity\Ticket;
 use App\Form\LoteType;
 use App\Repository\EventoRepository;
 use App\Repository\LoteRepository;
+use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +26,22 @@ class LoteController extends AbstractController
         $evento = $eventoRepository->find($session->get('idEvento'));
         if ($evento === null) {
             $this->addFlash('warning', 'Nenhum evento selecionado, ou evento selecionado é inválido!');
-            $this->redirectToRoute('app_evento_index',[], Response::HTTP_SEE_OTHER);
+            $this->redirectToRoute('app_evento_index', [], Response::HTTP_SEE_OTHER);
         }
-        $lotes = $loteRepository->findBy(['tickets.evento'=>$evento]);
+        $lotes = $loteRepository->findByEvento($evento);
         return $this->render('lote/index.html.twig', [
             'lotes' => $lotes,
         ]);
     }
 
     #[Route('/new', name: 'app_lote_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, EventoRepository $eventoRepository, RequestStack $requestStack): Response
+    public function new(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        EventoRepository       $eventoRepository,
+        RequestStack           $requestStack,
+        TicketRepository       $ticketRepository
+    ): Response
     {
 
         $lote = new Lote();
@@ -49,8 +56,9 @@ class LoteController extends AbstractController
                 $this->addFlash('warning', 'Nenhum evento selecionado, ou evento selecionado é inválido!');
                 $this->redirectToRoute('app_evento_index', [], Response::HTTP_SEE_OTHER);
             }
-
-            for ($i=1; $i<=$lote->getQuantidade();$i++){
+            $numeracao = $ticketRepository->findMaxNumber();
+            for ($i = 1; $i <= $lote->getQuantidade(); $i++) {
+                $numeracao+=1;
                 $ticket = new Ticket();
                 $ticket
                     ->setUserEmissao($this->getUser())
@@ -59,8 +67,9 @@ class LoteController extends AbstractController
                     ->setEvento($evento)
                     ->setRecolhido(false)
                     ->setLote($lote)
-                    ->setNumero($i)
-                    ;
+                    ->setSequenciaLote($i)
+                    ->setNumero($numeracao)
+                ;
                 $lote->addTicket($ticket);
             }
             $entityManager->persist($lote);
@@ -85,10 +94,11 @@ class LoteController extends AbstractController
     }
 
     #[Route('/{id}/lista', name: 'app_lote_lista', methods: ['GET'])]
-    public function lista(Evento $evento, RequestStack $requestStack ): Response
+    public function lista(Evento $evento, RequestStack $requestStack): Response
     {
         $session = $requestStack->getSession();
-        $session->set('idEvento',$evento->getId());
+        $session->set('idEvento', $evento->getId());
+        $session->set('nomeEvento', $evento->getNome() . ' - ' . $evento->getData()->format('Y'));
         return $this->redirectToRoute('app_lote_index', [], Response::HTTP_SEE_OTHER);
     }
 

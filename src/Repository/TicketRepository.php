@@ -45,4 +45,12 @@ class TicketRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findMaxNumber()
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('MAX(t.numero)')
+            ->getQuery()
+            ->getResult();
+        return $query[0][1] ?: 1000;
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Evento;
 use App\Entity\Lote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +47,17 @@ class LoteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   public function findByEvento(Evento $evento):array
+    {
+        return $this->createQueryBuilder('l')
+            ->join('l.tickets','t',)
+            ->join('t.produto','p')
+            ->andWhere('t.evento = :evento')
+            ->setParameter('evento', $evento)
+            ->orderBy('p.denominacao', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

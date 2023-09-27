@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Início{% endblock %}
-{% block header_title %} Selecione um evento {% endblock %}
+{% block header_title %} Início {% endblock %}
 {% block body %}
     <div class="container">
-        <div class="row g-2">
-            <img src="{{ qr_code_path( 'https://192.168.4.14:8000/login') }}" alt="teste"/>
+        <div class="row">
+            <div class="col">
+                <p class="display-2 text-muted">
+                    Olá {{ nome }},
+                </p>
+                <p class="display-4 text-muted mb-4">
+                    que bom te ver aqui!
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center"><a href="{{ path('app_evento_index') }}" class="btn btn-primary btn-lg shadow">
+                    Iniciar
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}

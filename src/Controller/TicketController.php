@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Lote;
 use App\Entity\Ticket;
 use App\Form\TicketType;
+use App\Repository\EventoRepository;
 use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,12 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class TicketController extends AbstractController
 {
     #[Route('/', name: 'app_ticket_index', methods: ['GET'])]
-    public function index(TicketRepository $ticketRepository): Response
+    public function index(TicketRepository $ticketRepository, RequestStack $requestStack, EventoRepository $eventoRepository): Response
     {
+        $session = $requestStack->getSession();
+        $evento = $eventoRepository->find($session->get('idEvento'));
+        if ($evento === null) {
+            $this->addFlash('warning', 'Nenhum evento selecionado, ou evento selecionado é inválido!');
+            $this->redirectToRoute('app_evento_index',[], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('ticket/index.html.twig', [
-            'tickets' => $ticketRepository->findBy([],['numero'=>'ASC']),
+            'tickets' => $ticketRepository->findBy(['evento'=>$evento],['numero'=>'ASC']),
         ]);
     }
+
 
     #[Route('/new', name: 'app_ticket_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -39,6 +49,20 @@ class TicketController extends AbstractController
         return $this->render('ticket/new.html.twig', [
             'ticket' => $ticket,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/list/{id}', name: 'app_ticket_list', methods: ['GET'])]
+    public function list(Lote $lote, TicketRepository $ticketRepository, RequestStack $requestStack, EventoRepository $eventoRepository): Response
+    {
+        $session = $requestStack->getSession();
+        $evento = $eventoRepository->find($session->get('idEvento'));
+        if ($evento === null) {
+            $this->addFlash('warning', 'Nenhum evento selecionado, ou evento selecionado é inválido!');
+            $this->redirectToRoute('app_evento_index',[], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('ticket/index.html.twig', [
+            'tickets' => $ticketRepository->findBy(['evento'=>$evento, 'lote'=>$lote],['numero'=>'ASC']),
         ]);
     }
 

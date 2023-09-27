@@ -117,8 +117,8 @@ class AppStringExtension extends AbstractExtension
     public function getFormatBoolean($value): string
     {
         return $value
-            ? 'fa fa-circle text-success'
-            : 'fa fa-circle text-secondary text-opacity-50';
+            ? 'bi bi-circle-fill text-success'
+            : 'bi bi-circle-fill text-secondary text-opacity-50';
     }
 
     public function getFormatMoney($value)

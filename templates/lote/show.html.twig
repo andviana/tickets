@@ -8,7 +8,7 @@
         <table class="table">
             <tbody>
             <tr>
-                <th>Código:</th>
+                <th>Código do Lote:</th>
                 <td class="small text-muted">{{ lote.id }}</td>
             </tr>
             <tr>
@@ -20,8 +20,24 @@
                 <td class="h5">{{ lote.quantidade }}</td>
             </tr>
             <tr>
+                <th>Valor:</th>
+                <td>{{ lote.produto.valor | get_format_money }}</td>
+            </tr>
+            <tr>
+                <th>Valor Total Esperado:</th>
+                <td>{{ lote.valorTotalPerspectiva | get_format_money }}</td>
+            </tr>
+            <tr>
+                <th>Tickets Registrados:</th>
+                <td  class="bg-warning fw-semibold">{{ lote.registradoTotalAbsoluto ~" ("~lote.registradoTotalPercentual~"%)"}}</td>
+            </tr>
+            <tr>
+                <th>Valor Registrado:</th>
+                <td class="bg-warning fw-semibold">{{ lote.valorTotalReal | get_format_money}}</td>
+            </tr>
+            <tr>
                 <th>Data de Emissão:</th>
-                <td>{{ lote.dataEmissao | date('d/m/y') }}</td>
+                <td class="small text-muted">{{ lote.dataEmissao | date('d/m/y H:i:s') }}</td>
             </tr>
             </tbody>
         </table>
@@ -29,7 +45,7 @@
     <div class="container text-center my-3">
         <div class="row my-2">
             <div class="col">
-                <a class="btn btn-primary w-100" href="{{path('app_ticket_index')}}">
+                <a class="btn btn-primary w-100" href="{{path('app_ticket_list', {'id':lote.id})}}">
                     <i class="bi bi-tags"></i>
                     Listar Tickets
                 </a>
@@ -38,12 +54,6 @@
                 <a class="btn btn-primary w-100" href="#">
                     <i class="bi bi-printer"></i>
                     Imprimir Tickets
-                </a>
-            </div>
-            <div class="col">
-                <a class="btn btn-primary w-100" href="{{ path('app_lote_edit', {'id': lote.id}) }}">
-                    <i class="bi bi-pencil-square"></i>
-                    Editar
                 </a>
             </div>
         </div>
