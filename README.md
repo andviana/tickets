@@ -1,8 +1,8 @@
-# Oficina de Matemática e Estatística com Python para a Educação Básica
+# Oficina de Matemática e Estatística com Python para a Educação Básica 🐍🤖👾
 
 O projeto visa proporcionar uma introdução prática e acessível à programação com Python, com foco em aplicações no ensino de matemática e estatística para estudantes da educação básica. Através de exemplos práticos, os alunos aprenderão a utilizar ferramentas computacionais para resolver problemas matemáticos, visualizar dados e compreender conceitos estatísticos.
 
-## Conteúdo programático
+## Conteúdo programático📚
 O conteúdo das aulas e atividades foi estruturado para cobrir os seguintes tópicos:
 
 1. **Fundamentos de Python:** Introdução à sintaxe básica da linguagem, tipos de dados, operadores e estruturas de controle.
@@ -12,7 +12,7 @@ O conteúdo das aulas e atividades foi estruturado para cobrir os seguintes tóp
 5. **Visualização de Dados:** Uso de bibliotecas como Matplotlib para criar gráficos simples e personalizáveis.
 6. **Análise de Dados:** Introdução ao Pandas para manipulação e análise de conjuntos de dados.
 
-## Ferramentas utilizadas
+## Ferramentas utilizadas⚙️
 
 - **Python:** Linguagem de programação versátil, amplamente utilizada para aplicações educacionais e científicas;
 
